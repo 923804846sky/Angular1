@@ -1,0 +1,98 @@
+<div class="aa">
+  <div class="b">
+    <div class="a">发布时间</div>
+    <div>
+      <nz-date-picker [(ngModel)]="shuju.startAt" placeholder=" " (ngModelChange)="onChange($event)"></nz-date-picker>
+    </div>
+  </div>
+  <div class="b">
+    <div class="a">一</div>
+    <div>
+      <nz-date-picker [(ngModel)]="shuju.endAt" placeholder=" " (ngModelChange)="onChange($event)"></nz-date-picker>
+    </div>
+  </div>
+  <div class="b">
+    <div class="a">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型</div>
+    <nz-select [(ngModel)]="shuju.type" nzAllowClear nzPlaceHolder="全部" style="width: 180px;">
+      <nz-option nzValue="" nzLabel="全部"></nz-option>
+      <nz-option nzValue="0" nzLabel="首页banner"></nz-option>
+      <nz-option nzValue="1" nzLabel="找职位banner"></nz-option>
+      <nz-option nzValue="2" nzLabel="找精英banner"></nz-option>
+      <nz-option nzValue="3" nzLabel="行业大图"></nz-option>
+    </nz-select>
+  </div>
+</div>
+<br>
+<br>
+<div class="c">
+  <div class="a">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态</div>
+  <nz-select [(ngModel)]="shuju.status" nzAllowClear nzPlaceHolder="全部" style="width: 165px;">
+    <nz-option nzValue="" nzLabel="全部"></nz-option>
+    <nz-option nzValue="1" nzLabel="草稿"></nz-option>
+    <nz-option nzValue="2" nzLabel="上线"></nz-option>
+  </nz-select>
+</div>
+<br><br>
+<br><br>
+<div class="d">
+
+      <nz-button-group [nzSize]="size">
+        <button nz-button nzType="primary"  (click)="qingkong()"><i nz-icon ></i>清空</button>
+        <button nz-button nzType="primary" (click)="sousuo()">搜索<i nz-icon ></i></button>
+      </nz-button-group>
+  <!-- <button id="q" (click)="qingkong()">清空</button>
+  <button id="s" (click)="sousuo()">搜索</button> -->
+</div>
+<br><br>
+<div class="s">
+   
+  <!-- <button class="ss"> <a [routerLink]="[ '../article2']">新增+</a></button> -->
+  <nz-table #basicTable [nzData]="bbb" [nzFrontPagination]='false' [nzTotal]='shujuzongshu' [nzPageSize]='fenyeyeshu'
+    (nzPageIndexChange)="change($event)">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>名称</th>
+        <th>类型</th>
+        <th>发布时间</th>
+        <th>修改时间</th>
+        <th>发布者</th>
+        <th>状态</th>
+        <th style="display:flex; justify-content:center;"> 
+    
+            <button class="xinzeng" nz-button nzType="danger" nzGhost [routerLink]="[ '../article2']"> 新增+</button>
+      操作
+</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of bbb">
+        <td>{{ data.id }}</td>
+        <td>{{ data.title }}</td>
+        <td>{{ data.type | guandaoB}}</td>
+        <td>{{ data.createAt  | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+        <td>{{ data.updateAt  | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+        <td>{{ data.author }}</td>
+        <td>{{ data.status | guandaoA}}</td>
+        <td style="display:flex; justify-content:center;">
+          <a nz-popconfirm [nzTitle]="data.status === 2?'确定下线?':'确定上线？'
+             " nzPopconfirmPlacement="top"
+              (nzOnConfirm)="confirm(data.id,data.status)">
+            {{data.status === 2?'下线':'上线'}}</a>
+            <a (click)="edit(data)">编辑</a>
+            <a 
+            nz-popconfirm
+            nzPopconfirmTitle="删除二次确认"
+            (nzOnConfirm)="confirm(shanchu(data))"
+         
+            nzPopconfirmPlacement="top"
+ 
+
+             >删除</a>
+        </td>
+
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

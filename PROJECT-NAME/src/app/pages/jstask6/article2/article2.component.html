@@ -1,0 +1,181 @@
+<!-- <div class="top">
+  <div class="ttop">Article新增</div>
+  <div class="a">
+    <div class="a1">
+      <div class="b">标题名称</div>
+      <input nz-input placeholder="Basic usage" [(ngModel)]="omg.title" style="width: 380px;">
+    </div>
+    <div class="a1">
+      <div class="b">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型</div>
+      <nz-select [(ngModel)]="omg.type" nzAllowClear nzPlaceHolder="Choose" nzPlaceHolder="请选择" style="width: 180px;">
+        <nz-option nzValue="" nzLabel="全部"></nz-option>
+        <nz-option nzValue="0" nzLabel="首页banner "></nz-option>
+        <nz-option nzValue="1" nzLabel="找职位banner "></nz-option>
+        <nz-option nzValue="2" nzLabel="找精英banner"></nz-option>
+        <nz-option nzValue="2" nzLabel="行业大图"></nz-option>
+      </nz-select>
+    </div>
+    <div class="a1">
+      <div class="b">说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</div>
+      <input nz-input placeholder="Basic usage" [(ngModel)]="omg.content" style="width: 380px;" />
+    </div>
+    <div class="a1">
+      <div class="b">跳转链接</div>
+      <input nz-input placeholder="Basic usage" [(ngModel)]="omg.url" style="width: 380px;" />
+    </div>
+    <div class="a1">
+      <div class="b">配&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图</div>
+      <div class="clearfix">
+        <nz-upload nzAction="/a/u/img/task" nzListType="picture-card" [(nzFileList)]="fileList"
+          [nzShowUploadList]="showUploadList" [nzPreview]="handlePreview" (nzChange)='change($event)'>
+          <i nz-icon nzType="plus"></i>
+          <div class="ant-upload-text">Upload</div>
+        </nz-upload>
+        <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+          (nzOnCancel)="previewVisible = false">
+          <ng-template #modalContent>
+            <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+          </ng-template>
+        </nz-modal>
+      </div>
+
+    </div>
+    <div>
+      <div class="a1">
+        <div class="b">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+        <div>
+          <button nz-button nzType="primary"   (click)="online()"><i nz-icon ></i>立即上线</button>
+   
+          <button nz-button nzType="primary"  (click)="cnline()">存为草稿<i nz-icon ></i></button>
+        </div>
+
+        <div class="ss">
+          <button  [routerLink]="[ '../article']" nz-button nzType="default"><i nz-icon [nzIconfont]="'icon-tuichu'"></i>取消</button>
+        
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div> -->
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">标题名称</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="等下..." [nzErrorTip]="userErrorTpl">
+      <input [(ngModel)]="omg.title" nz-input formControlName="userName" placeholder="请输入你为标题取的名称" />
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          必填项，请输入标题名称
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="等下..." [nzErrorTip]="userErrorTpl">
+      <nz-select nzPlaceHolder="请选择" [(ngModel)]="omg.type" name="select-validate" formControlName="erName">
+        <nz-option nzValue="0" nzLabel="首页banner "></nz-option>
+        <nz-option nzValue="1" nzLabel="找职位banner "></nz-option>
+        <nz-option nzValue="2" nzLabel="找精英banner"></nz-option>
+        <nz-option nzValue="3" nzLabel="行业大图"></nz-option>
+      </nz-select>
+      <!-- <nz-select nzPlaceHolder="请选择" [(ngModel)]="omg.industry" name = "industry" *ngIf="omg.type == 3">
+          <nz-option nzValue="0" nzLabel="移动互联网"></nz-option>
+          <nz-option nzValue="1" nzLabel="电子商务"></nz-option>
+          <nz-option nzValue="2" nzLabel="企业服务"></nz-option>
+          <nz-option nzValue="3" nzLabel="O2O"></nz-option>
+          <nz-option nzValue="4" nzLabel="教育"></nz-option>
+          <nz-option nzValue="5" nzLabel="金融"></nz-option>
+          <nz-option nzValue="6" nzLabel="游戏"></nz-option>
+        </nz-select> -->
+    </nz-form-control>
+
+
+  </nz-form-item>
+
+  <nz-form-item *ngIf="omg.type == 3" >
+          <nz-form-label [nzSpan]="7">行业大图</nz-form-label>
+        <nz-form-control [nzSpan]="12" [nzErrorTip]="userErrorTpl" >
+          <nz-select nzPlaceHolder="请选择" [(ngModel)]="omg.industry"  [ngModelOptions]="{standalone: true}" >
+            <nz-option nzValue="0" nzLabel="移动互联网"></nz-option>
+            <nz-option nzValue="1" nzLabel="电子商务"></nz-option>
+            <nz-option nzValue="2" nzLabel="企业服务"></nz-option>
+            <nz-option nzValue="3" nzLabel="O2O"></nz-option>
+            <nz-option nzValue="4" nzLabel="教育"></nz-option>
+            <nz-option nzValue="5" nzLabel="金融"></nz-option>
+            <nz-option nzValue="6" nzLabel="游戏"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">跳转链接</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="等下..." [nzErrorTip]="userErrorTpl">
+      <input nz-input formControlName="Name" placeholder="请输入跳转链接" [(ngModel)]="omg.url" />
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          必填项，请输入跳转链接
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="等下..." [nzErrorTip]="userErrorTpl">
+      <textarea [(ngModel)]="omg.content" formControlName="comment" nz-input rows="2" placeholder="请输入说明"></textarea>
+      <ng-template #userErrorTpl let-control>
+
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<div class="a1">
+  <div class="b">配&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图</div>
+  <div class="clearfix">
+    <nz-upload [nzShowButton]="fileList.length < 1" nzAction="/a/u/img/task" nzListType="picture-card" [(nzFileList)]="fileList"
+      [nzShowUploadList]="showUploadList" [nzPreview]="handlePreview" (nzChange)='change($event)'>
+      <i nz-icon nzType="plus"></i>
+      <div class="ant-upload-text">Upload</div>
+    </nz-upload>
+    <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+      (nzOnCancel)="previewVisible = false">
+      <ng-template #modalContent>
+        <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+      </ng-template>
+    </nz-modal>
+  </div>
+
+</div>
+<div>
+  <div class="a1">
+    <div class="b">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+    <div>
+      <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-control>
+            <button nz-button nzType="primary"
+             [disabled]="(!validateForm.valid || omg.img == undefined) || off"
+              (click)="online()"><i nz-icon></i>立即上线</button>
+
+            <button nz-button nzType="primary" 
+            [disabled]="(!validateForm.valid || omg.img == undefined) || off"
+            (click)="cnline()">存为草稿<i nz-icon></i></button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+      <!-- <button nz-button nzType="primary" [disabled]="!validateForm.valid"  (click)="online()"><i nz-icon ></i>立即上线</button> -->
+
+      <!-- <button nz-button nzType="primary"  (click)="cnline()">存为草稿<i nz-icon ></i></button> -->
+    </div>
+
+    <div class="ss" >
+      <button (click)="goBack()" nz-button nzType="default"><i nz-icon [nzIconfont]="'icon-tuichu'"></i>取消</button>
+
+    </div>
+  </div>
